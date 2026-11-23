@@ -1,0 +1,184 @@
+{
+  "enable": {
+    "description": "启用外网视频解析",
+    "type": "bool",
+    "default": true,
+    "hint": "总开关。关掉后所有外网链接都不处理。"
+  },
+  "site_youtube": {
+    "description": "YouTube 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 youtube.com / youtu.be / Shorts 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_twitter": {
+    "description": "Twitter / X 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 twitter.com / x.com 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_tiktok": {
+    "description": "TikTok 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 tiktok.com 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_instagram": {
+    "description": "Instagram 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 instagram.com 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_facebook": {
+    "description": "Facebook 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 facebook.com / fb.watch 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_twitch": {
+    "description": "Twitch 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 twitch.tv 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_vimeo": {
+    "description": "Vimeo 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 vimeo.com 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_reddit": {
+    "description": "Reddit 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 reddit.com 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_dailymotion": {
+    "description": "Dailymotion 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 dailymotion.com / dai.ly 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_niconico": {
+    "description": "niconico 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 nicovideo.jp 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_soundcloud": {
+    "description": "SoundCloud 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 soundcloud.com 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "site_bilibili_tv": {
+    "description": "bilibili 海外版 解析开关",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后 bilibili.tv 的链接不再解析。总开关关掉时，这里的开关一律失效。",
+    "condition": {
+      "enable": true
+    }
+  },
+  "send_card": {
+    "description": "发送信息卡片",
+    "type": "bool",
+    "default": true,
+    "hint": "解析成功后先发一张卡片，含封面、标题、作者、时长、播放量。卡片是本地绘制的，不依赖外部渲染服务。"
+  },
+  "send_video": {
+    "description": "发送视频文件",
+    "type": "bool",
+    "default": true,
+    "hint": "下载并发送视频本体。关掉就只发卡片和链接。"
+  },
+  "max_height": {
+    "description": "画质上限（像素高）",
+    "type": "int",
+    "default": 720,
+    "slider": {
+      "min": 144,
+      "max": 2160,
+      "step": 24
+    },
+    "hint": "下载时不超过这个高度。480 最省流量也最容易发出去，720 是个平衡点，1080 以上体积会明显变大、也更可能超时。"
+  },
+  "max_size_mb": {
+    "description": "视频体积上限（MB）",
+    "type": "int",
+    "default": 50,
+    "slider": {
+      "min": 5,
+      "max": 200,
+      "step": 5
+    },
+    "hint": "下载完超过这个大小就不发文件了，避免传到一半断掉。"
+  },
+  "cooldown_seconds": {
+    "description": "解析冷却（秒）",
+    "type": "int",
+    "default": 30,
+    "slider": {
+      "min": 0,
+      "max": 300,
+      "step": 5
+    },
+    "hint": "同一个群里两次解析的最短间隔，防止有人连发链接把机器拖死。"
+  },
+  "download_timeout_seconds": {
+    "description": "单次下载超时（秒）",
+    "type": "int",
+    "default": 180,
+    "slider": {
+      "min": 30,
+      "max": 600,
+      "step": 30
+    },
+    "hint": "超过这个时间还没下完就放弃，避免任务一直挂着。"
+  },
+  "proxy": {
+    "description": "代理地址",
+    "type": "string",
+    "default": "",
+    "hint": "留空则跟随环境变量。YouTube、Twitter 这些不挂代理通常连不上，格式如 http://127.0.0.1:7890。"
+  },
+  "fallback_link_on_fail": {
+    "description": "失败时补发原链接",
+    "type": "bool",
+    "default": false,
+    "hint": "下载失败或超过体积上限时，要不要把原链接发出来。默认关闭——群里多数人没有代理环境，给了也点不开，容易变成刷屏。只有你自己看的时候才建议开。"
+  }
+}
