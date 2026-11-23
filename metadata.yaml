@@ -1,0 +1,26 @@
+name: astrbot_plugin_yt_share
+display_name: 外网视频解析
+short_desc: 只认外网站点的视频解析，yt-dlp 内核，下载后直接发到群里
+desc: |
+  专治国内解析插件不管外网的问题：把 YouTube、Twitter/X、TikTok、Instagram、
+  Facebook、Twitch、Vimeo、Reddit、Dailymotion、niconico、SoundCloud 等
+  外网链接，解析成卡片 + 可播放的视频发进群。
+
+  - 内核基于开源项目 yt-dlp（https://github.com/yt-dlp/yt-dlp ，Unlicense），
+    本站只负责在 AstrBot 里做识别、调度、体积控制和消息发送，不复制其代码
+  - 支持画质上限与体积上限；失败默认安静跳过，可选用开关补发原链接
+  - 卡片信息取自平台的公开元数据（标题、作者、时长、封面）
+version: v0.2.3
+author: lemonir
+author_url: https://github.com/lemonir
+repo: https://github.com/lemonir/astrbot_plugin_yt_share
+support_platforms:
+  - aiocqhttp
+astrbot_version: ">=4.10.0"
+category: 工具
+tags:
+  - 外链解析
+  - 视频解析
+  - youtube
+  - twitter
+  - tiktok
