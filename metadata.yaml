@@ -9,8 +9,9 @@ desc: |
   - 内核基于开源项目 yt-dlp（https://github.com/yt-dlp/yt-dlp ，Unlicense），
     本站只负责在 AstrBot 里做识别、调度、体积控制和消息发送，不复制其代码
   - 支持画质上限与体积上限；失败默认安静跳过，可选用开关补发原链接
+  - 可选解析机器人自己发出的链接（配合去重，方便和资讯类插件联动）
   - 卡片信息取自平台的公开元数据（标题、作者、时长、封面）
-version: v0.2.3
+version: v0.3.0
 author: lemonir
 author_url: https://github.com/lemonir
 repo: https://github.com/lemonir/astrbot_plugin_yt_share
