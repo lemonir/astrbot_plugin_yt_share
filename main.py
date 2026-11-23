@@ -173,6 +173,7 @@ class YtSharePlugin(Star):
         super().__init__(context)
         self.config = config or {}
         self._last: dict[str, float] = {}
+        self._seen_urls: dict[str, float] = {}
         self._workdir = Path(tempfile.gettempdir()) / "astrbot_yt_share"
         self._workdir.mkdir(parents=True, exist_ok=True)
 
@@ -215,7 +216,10 @@ class YtSharePlugin(Star):
     async def on_any_message(self, event: AstrMessageEvent):
         if not self._bool("enable", True):
             return
-        if str(event.get_sender_id() or "") == str(event.get_self_id() or ""):
+        is_self = str(event.get_sender_id() or "") == str(event.get_self_id() or "")
+        if is_self and not self._bool("parse_bot_messages", False):
+            # 默认不处理自己发的消息，避免「解析完发出去又触发解析」的死循环。
+            # 需要和推送类插件（比如资讯助手推的油管链接）联动时再打开这个开关。
             return
 
         text = event.message_str or ""
@@ -241,6 +245,20 @@ class YtSharePlugin(Star):
 
         scope = event.unified_msg_origin
         now = time.time()
+
+        # 同一条链接在窗口期内只解析一次：这是让「允许处理机器人消息」不会
+        # 变成无限循环的关键——发出去的链接不会再被当成新链接转发一遍。
+        dedup_window = self._int("url_dedup_minutes", 10) * 60
+        if dedup_window > 0:
+            last_seen = self._seen_urls.get(url, 0.0)
+            if now - last_seen < dedup_window:
+                logger.debug(f"[yt_share] 链接 {dedup_window/60:.0f} 分钟内已处理过，跳过")
+                return
+            self._seen_urls[url] = now
+            if len(self._seen_urls) > 200:
+                cutoff = now - dedup_window
+                self._seen_urls = {k: v for k, v in self._seen_urls.items() if v >= cutoff}
+
         cooldown = self._int("cooldown_seconds", 30)
         if cooldown > 0 and now - self._last.get(scope, 0.0) < cooldown:
             return
