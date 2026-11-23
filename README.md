@@ -23,7 +23,7 @@ YouTube、YouTube Shorts、Twitter/X、TikTok、Instagram、Facebook、Twitch、
 ```
 群里出现外网链接
       │
-      ├─ 命中白名单 → 进冷却检查（同群 30 秒内不重复解析）
+      ├─ 命中白名单 → URL 去重（同链接 10 分钟一次）→ 同群冷却 30 秒
       │
       ├─ yt-dlp 取元数据 → 绘制卡片（封面 + 标题 + 作者 + 时长 + 播放/点赞）
       │
@@ -49,6 +49,8 @@ apt-get install -y ffmpeg   # 音视频分流需要它来合并
 | 配置项 | 默认值 | 说明 |
 | --- | --- | --- |
 | `enable` | `true` | 总开关。关掉后所有链接都不处理，下面那些站点开关一并失效。 |
+| `parse_bot_messages` | `false` | 也解析机器人自己发的链接，用于和资讯类插件联动。默认关，避免解析完发出去又触发解析。 |
+| `url_dedup_minutes` | `10` | 同一条链接多久内只解析一次。这是「开了上面那个开关也不会死循环」的保险，不建议设 0。 |
 | `site_youtube` 等 12 个 | `true` | 每个外网站点一个独立开关：YouTube、Twitter/X、TikTok、Instagram、Facebook、Twitch、Vimeo、Reddit、Dailymotion、niconico、SoundCloud、bilibili.tv。只影响自己那一家，关掉别的照常解析；总开关关掉时全部失效。 |
 | `send_card` | `true` | 解析成功后先发一张卡片（本地绘制，不依赖外部渲染服务）。 |
 | `send_video` | `true` | 下载并发送视频本体。关掉就只发卡片和链接。 |
@@ -75,6 +77,7 @@ apt-get install -y ffmpeg   # 音视频分流需要它来合并
 
 ## 更新日志
 
+- **v0.3.0**：新增 `parse_bot_messages`（默认关）和 `url_dedup_minutes`（默认 10 分钟），可以接住机器人自己在群里发的链接，靠去重断掉循环。
 - **v0.2.3**：把「失败补发原链接」做成开关 `fallback_link_on_fail`，默认关闭。
 - **v0.2.2**：失败时不再发提示语，只保留日志，避免在群里刷屏。
 - **v0.2.1**：失败时不再补发原链接——群里大多数人没有代理环境，给链接也点不开。
