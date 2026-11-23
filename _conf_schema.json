@@ -5,6 +5,23 @@
     "default": true,
     "hint": "总开关。关掉后所有外网链接都不处理。"
   },
+  "parse_bot_messages": {
+    "description": "也解析机器人自己发的链接",
+    "type": "bool",
+    "default": false,
+    "hint": "打开后，机器人自己发出的外网链接也会被解析（比如资讯插件推送里带的油管链接）。默认关闭，避免「解析完发出去又触发解析」的循环；配合下面的去重窗口使用是安全的。"
+  },
+  "url_dedup_minutes": {
+    "description": "同一链接去重窗口（分钟）",
+    "type": "int",
+    "default": 10,
+    "slider": {
+      "min": 0,
+      "max": 120,
+      "step": 1
+    },
+    "hint": "同一条链接在这个时间内只解析一次。这是让「解析机器人消息」不会无限循环的关键，不建议设成 0。"
+  },
   "site_youtube": {
     "description": "YouTube 解析开关",
     "type": "bool",
